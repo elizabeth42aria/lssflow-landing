@@ -2,9 +2,27 @@
 <html lang="sv">
 <head>
   <meta charset="utf-8">
-  <title>LSS Flow — Effektivare LSS‑handläggning</title>
+  <title>LSS Flow — Effektivare LSS-handläggning</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LSS Flow minskar den administrativa bördan för LSS-handläggare och stödpedagoger genom ett visuellt arbetsflöde ovanpå befintliga system.">
+  <meta name="description" content="Mindre administration. Mer tid för människor. Visuella arbetsflöden ovanpå LifeCare & IBIC.">
+
+  <!-- SEO -->
+  <link rel="icon" href="/favicon.ico">
+  <meta name="robots" content="index,follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LSS Flow — Effektivare LSS-handläggning">
+  <meta property="og:description" content="Mindre administration. Mer tid för människor. Visuella arbetsflöden ovanpå LifeCare & IBIC.">
+  <meta property="og:image" content="https://lssflow.se/og-image.png">
+  <meta property="og:url" content="https://lssflow.se/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LSS Flow — Effektivare LSS-handläggning">
+  <meta name="twitter:description" content="Mindre administration. Mer tid för människor.">
+  <meta name="twitter:image" content="https://lssflow.se/og-image.png">
+
   <style>
     :root{--bg:#0b0f1a;--card:#121a2c;--text:#e8edf7;--muted:#b9c3d6;--brand:#7cf0d6;--line:#1f2b47}
     *{box-sizing:border-box}
@@ -18,7 +36,7 @@
     .hero h1{font-size:clamp(28px,5vw,46px);line-height:1.05;margin:0}
     .sub{color:var(--muted);max-width:760px}
     .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-    .btn{background:var(--brand);color:#041014;border:none;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer}
+    .btn{background:var(--brand);color:#041014;border:none;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
     .btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
     .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr);margin:24px 0 34px}
     .card{grid-column:span 12;background:linear-gradient(180deg,#121a2c,#0f1628);border:1px solid var(--line);border-radius:14px;padding:18px}
@@ -26,6 +44,13 @@
       .span6{grid-column:span 6}
       .span7{grid-column:span 7}
       .span5{grid-column:span 5}
+      .span4{grid-column:span 4}
+    }
+    @media(min-width:640px) and (max-width:899px){
+      .grid{grid-template-columns:repeat(8,1fr)}
+      .span7{grid-column:span 8}
+      .span6{grid-column:span 8}
+      .span5{grid-column:span 8}
       .span4{grid-column:span 4}
     }
     .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#9fb0d0}
@@ -41,7 +66,12 @@
     .footer{color:#94a6c7;font-size:13px;border-top:1px solid var(--line);margin-top:36px;padding-top:16px}
     .mock{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:12px;background:#0d1526}
     .note{font-size:12px;color:#93a6c8}
+    .cta-bottom{text-align:center}
+    .cta-float{position:fixed;right:18px;bottom:18px;z-index:10}
   </style>
+
+  <!-- Plausible analytics -->
+  <!-- <script defer data-domain="YOUR_DOMAIN" src="https://plausible.io/js/script.js"></script> -->
 </head>
 <body>
   <header>
@@ -88,36 +118,35 @@
       <div class="card span7">
         <div class="kicker">Förhandsvisning</div>
         <h3 class="h2">Mockup – LSS Flow (exempel)</h3>
-        <svg class="mock" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visuell process">
-          <rect x="0" y="0" width="900" height="360" fill="#0d1526"/>
-          <!-- columns -->
-          <g>
-            <rect x="20" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
-            <rect x="240" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
-            <rect x="460" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
-            <rect x="680" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
-          </g>
-          <!-- headers -->
-          <text x="40" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Ansökan</text>
-          <text x="260" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Utredning</text>
-          <text x="480" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Beslut</text>
-          <text x="700" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Uppföljning</text>
-          <!-- cards -->
-          <g>
-            <rect x="30" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
-            <rect x="30" y="140" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
-            <rect x="250" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
-            <rect x="470" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
-            <rect x="690" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
-          </g>
-          <!-- labels -->
-          <text x="40" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Ärende #1023</text>
-          <text x="40" y="165" fill="#b9c3d6" font-family="Arial" font-size="13">Ärende #1044</text>
-          <text x="260" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Intervju bokad</text>
-          <text x="480" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Beslut utkast</text>
-          <text x="700" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Uppföljning 3 mån</text>
-        </svg>
-        <p class="note">Illustration: exempel på hur ärenden rör sig i flödet.</p>
+        <figure aria-label="Visuell översikt av ärendeflödet i LSS Flow">
+          <svg class="mock" role="img" aria-labelledby="lssflow-fig" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+            <title id="lssflow-fig">Ansökan, Utredning, Beslut, Uppföljning – exempel på ärendeflöde</title>
+            <rect x="0" y="0" width="900" height="360" fill="#0d1526"/>
+            <g>
+              <rect x="20" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
+              <rect x="240" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
+              <rect x="460" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
+              <rect x="680" y="20" width="200" height="320" rx="10" fill="#101a2d" stroke="#1f2b47"/>
+            </g>
+            <text x="40" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Ansökan</text>
+            <text x="260" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Utredning</text>
+            <text x="480" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Beslut</text>
+            <text x="700" y="50" fill="#e8edf7" font-family="Arial" font-size="16">Uppföljning</text>
+            <g>
+              <rect x="30" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
+              <rect x="30" y="140" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
+              <rect x="250" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
+              <rect x="470" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
+              <rect x="690" y="70" width="180" height="60" rx="8" fill="#0f1728" stroke="#26334f"/>
+            </g>
+            <text x="40" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Ärende #1023</text>
+            <text x="40" y="165" fill="#b9c3d6" font-family="Arial" font-size="13">Ärende #1044</text>
+            <text x="260" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Intervju bokad</text>
+            <text x="480" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Beslut utkast</text>
+            <text x="700" y="95" fill="#b9c3d6" font-family="Arial" font-size="13">Uppföljning 3 mån</text>
+          </svg>
+          <figcaption class="note">Exempel: ärenden rör sig mellan kolumnerna från ansökan till uppföljning.</figcaption>
+        </figure>
       </div>
       <div class="card span5">
         <div class="kicker">Pilot för kommuner</div>
@@ -130,6 +159,14 @@
       </div>
     </section>
 
+    <section class="grid">
+      <div class="card span12">
+        <div class="kicker">Resultat</div>
+        <h3 class="h2">30% mindre administration på 60 dagar</h3>
+        <p class="muted">Pilotmål: Kortare handläggningstid genom påminnelser och IBIC-sammanfattningar. Placeholderdata uppdateras med riktiga siffror vid lansering.</p>
+      </div>
+    </section>
+
     <section id="book" class="grid">
       <div class="card span6">
         <div class="kicker">Boka demo</div>
@@ -137,11 +174,11 @@
         <form id="demoForm" action="https://formspree.io/f/XXXXX" method="POST">
           <div>
             <label>Namn och efternamn</label>
-            <input name="name" required placeholder="För- och efternamn">
+            <input name="name" autocomplete="name" required placeholder="För- och efternamn">
           </div>
           <div>
             <label>E‑post</label>
-            <input type="email" name="email" required placeholder="namn@kommun.se">
+            <input type="email" name="email" autocomplete="email" required placeholder="namn@kommun.se">
           </div>
           <div>
             <label>Roll</label>
@@ -179,11 +216,38 @@
         <p class="muted">Kontakt: <a href="mailto:care@neuroljus.com">care@neuroljus.com</a></p>
       </div>
     </section>
+
+    <section class="grid">
+      <div class="card span6">
+        <div class="kicker">Säkerhet</div>
+        <h3 class="h2">Privacy by design</h3>
+        <p class="muted">Endast nödvändig data lagras under pilot. Åtkomststyrning och loggning säkerställer spårbarhet. Data raderas på begäran enligt avtal.</p>
+      </div>
+      <div class="card span6">
+        <div class="kicker">Integration</div>
+        <h3 class="h2">Ovanpå LifeCare & IBIC</h3>
+        <p class="muted">Vi ersätter inte befintliga system. LSS Flow lägger till visuellt arbetsflöde, påminnelser och AI-sammanfattningar som integreras i befintliga processer.</p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card span12 cta-bottom">
+        <h3 class="h2">Redo att se hur LSS Flow fungerar i praktiken?</h3>
+        <a href="#book" class="btn">Boka demo (2 minuter)</a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <div>© LSS Flow — en produkt av Neuroljus</div>
+    <nav class="muted" style="margin-top:8px">
+      <a href="/integritet.html">Integritetspolicy</a> ·
+      <a href="/villkor.html">Villkor</a> ·
+      <a href="mailto:care@neuroljus.com">care@neuroljus.com</a>
+    </nav>
   </footer>
+
+  <a class="btn cta-float" href="#book" aria-label="Boka demo">Boka demo</a>
 
   <script>
     const form = document.getElementById('demoForm');
