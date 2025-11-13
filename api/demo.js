@@ -20,7 +20,8 @@ module.exports = async (req, res) => {
 
   try {
     // Vercel parsea JSON si viene con Content-Type: application/json
-    const { full_name, email, organization, message } = req.body || {};
+  const { full_name, email, role, kommun, message } = req.body || {};
+  const organization = [role, kommun].filter(Boolean).join(' – ');
 
     if (!full_name || !email) {
       return res.status(400).json({ error: 'Namn och e-post krävs.' });
