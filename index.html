@@ -171,41 +171,87 @@
       <div class="card span6">
         <div class="kicker">Boka demo</div>
         <h3 class="h2">2 minuter – visa flödet</h3>
-        <form id="demoForm" action="https://formspree.io/f/XXXXX" method="POST">
-          <div>
-            <label>Namn och efternamn</label>
-            <input name="name" autocomplete="name" required placeholder="För- och efternamn">
-          </div>
-          <div>
-            <label>E‑post</label>
-            <input type="email" name="email" autocomplete="email" required placeholder="namn@kommun.se">
-          </div>
-          <div>
-            <label>Roll</label>
-            <select name="role" required>
-              <option value="">Välj…</option>
-              <option>Enhetschef LSS</option>
-              <option>Biträdande enhetschef</option>
-              <option>Handläggare</option>
-              <option>Stödpedagog</option>
-              <option>Annan</option>
-            </select>
-          </div>
-          <div>
-            <label>Kommun</label>
-            <input name="kommun" placeholder="Lidingö Stad">
-          </div>
-          <div>
-            <label>Meddelande (valfritt)</label>
-            <textarea name="message" placeholder="Föreslå gärna datum/tid."></textarea>
-          </div>
-          <input type="hidden" name="_subject" value="Demo-förfrågan – LSS Flow">
-          <button class="btn" type="submit">Skicka förfrågan</button>
-          <p class="muted">Eller skriv direkt till <a href="mailto:care@neuroljus.com">care@neuroljus.com</a>.</p>
-          <div id="ok" class="muted" style="display:none;">Tack! Vi återkommer inom kort.</div>
-          <div id="err" class="muted" style="display:none;">Något gick fel. Prova igen eller mejla oss.</div>
-        </form>
-      </div>
+        <form id="demoForm" method="POST" onsubmit="submitDemoForm(event)">
+  <div>
+    <label>Namn och efternamn</label>
+    <input name="full_name" autocomplete="name" required placeholder="För- och efternamn">
+  </div>
+
+  <div>
+    <label>E-post</label>
+    <input type="email" name="email" autocomplete="email" required placeholder="namn@kommun.se">
+  </div>
+
+  <div>
+    <label>Roll</label>
+    <select name="role" required>
+      <option value="">Välj…</option>
+      <option>Enhetschef LSS</option>
+      <option>Biträdande enhetschef</option>
+      <option>Handläggare</option>
+      <option>Stödpedagog</option>
+      <option>Annan</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Kommun</label>
+    <input name="kommun" placeholder="Lidingö Stad">
+  </div>
+
+  <div>
+    <label>Meddelande (valfritt)</label>
+    <textarea name="message" placeholder="Föreslå gärna datum/tid."></textarea>
+  </div>
+
+  <button class="btn" type="submit">Skicka förfrågan</button>
+
+  <p id="status-ok" class="muted" style="display:none;color:#8CF2C9;">
+    Tack! Vi återkommer inom kort.
+  </p>
+
+  <p id="status-error" class="muted" style="display:none;color:#FF9B9B;">
+    Något gick fel. Prova igen eller mejla oss.
+  </p>
+</form>
+
+<script>
+async function submitDemoForm(event) {
+  event.preventDefault();
+  const form = event.target;
+
+  const data = {
+    full_name: form.full_name.value,
+    email: form.email.value,
+    role: form.role.value,
+    kommun: form.kommun.value,
+    message: form.message.value
+  };
+
+  const okMsg = document.getElementById("status-ok");
+  const errMsg = document.getElementById("status-error");
+  okMsg.style.display = "none";
+  errMsg.style.display = "none";
+
+  try {
+    const response = await fetch("/api/demo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      okMsg.style.display = "block";
+      form.reset();
+    } else {
+      errMsg.style.display = "block";
+    }
+  } catch (error) {
+    errMsg.style.display = "block";
+  }
+}
+</script>
+            
       <div class="card span6">
         <div class="kicker">Integritet</div>
         <h3 class="h2">Privacy by design</h3>
