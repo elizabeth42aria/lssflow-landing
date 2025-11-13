@@ -1,0 +1,13 @@
+{
+  "name": "lssflow-landing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"Static HTML project\"",
+    "start": "echo \"Use vercel dev locally\""
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "resend": "^3.3.0"
+  }
+}
