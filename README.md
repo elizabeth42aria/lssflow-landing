@@ -1,8 +1,8 @@
-# LSS Flow — Tydlig och strukturerad information om stöd- och service enligt LSS
+# LSS Flow. Tydlig och strukturerad information om stöd och service enligt LSS
 
 Utvecklat inom ramen för Neuroljus.
 
-LSS Flow är en enkel, snabb och tillgänglig digital yta som syftar till att kommunicera grundläggande information om stöd- och serviceinsatser enligt LSS.
+LSS Flow är en enkel, snabb och tillgänglig digital yta som syftar till att kommunicera grundläggande information om stöd och serviceinsatser enligt LSS.
 Syftet är att erbjuda en neutral och lättöverskådlig startpunkt för verksamheter, kommuner och andra aktörer inom omsorgssektorn.
 
 Projektet ingår i Neuroljus, en plattform för utveckling av digitala verktyg med fokus på tydlighet, tillgänglighet och användarvänlighet i vård och omsorg.
