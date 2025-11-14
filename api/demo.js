@@ -49,11 +49,17 @@ module.exports = async (req, res) => {
     );
 
     // Enviar email a ti (solo si hay API key configurada)
+      // Enviar email a ti (solo si hay API key configurada)
+    let emailResult = null;
+
     if (resend) {
       try {
-        await resend.emails.send({
-          from: 'LSS Flow <no-reply@neuroljus.com>',
-          to: 'ospieli85@gmail.com',
+        emailResult = await resend.emails.send({
+          // usa dominio verificado
+          from: 'LSS Flow <care@neuroljus.com>',
+          to: ['ospieli85@gmail.com'],
+          reply_to: email,
+
           subject: 'Ny demo-förfrågan från LSS Flow',
           text: `
 Ny demo-förfrågan:
@@ -68,13 +74,20 @@ ${message || '(inget meddelande)'}
 Mottagen: ${new Date().toISOString()}
           `.trim()
         });
+        console.log('Resend response:', emailResult);
       } catch (emailError) {
-        console.error('Error sending notification email:', emailError);
-        // No rompemos la respuesta al usuario aunque falle el email
+        console.error(
+          'Error sending notification email:',
+          emailError?.message,
+          emailError?.response?.data
+        );
       }
     }
 
-    return res.status(200).json({ success: true });
+        return res.status(200).json({
+      success: true,
+      emailSent: !!emailResult
+    });
   } catch (error) {
     console.error('Error saving demo request:', error);
     return res.status(500).json({ error: 'Internt serverfel.' });
