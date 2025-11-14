@@ -8,8 +8,7 @@ const pool = new Pool({
 
 // Resend: para emails (opcional si no hay API key)
 const resendApiKey = process.env.RESEND_API_KEY;
-const resend =
-  resendApiKey && new Resend(resendApiKey);
+const resend = resendApiKey && new Resend(resendApiKey);
 
 module.exports = async (req, res) => {
   // Solo permitimos POST
@@ -20,8 +19,8 @@ module.exports = async (req, res) => {
 
   try {
     // Vercel parsea JSON si viene con Content-Type: application/json
-  const { full_name, email, role, kommun, message } = req.body || {};
-  const organization = [role, kommun].filter(Boolean).join(' – ');
+    const { full_name, email, role, kommun, message } = req.body || {};
+    const organization = [role, kommun].filter(Boolean).join(' – ');
 
     if (!full_name || !email) {
       return res.status(400).json({ error: 'Namn och e-post krävs.' });
@@ -44,22 +43,21 @@ module.exports = async (req, res) => {
       `
       INSERT INTO demo_requests (full_name, email, organization, message)
       VALUES ($1, $2, $3, $4)
-    `,
+      `,
       [full_name, email, organization || null, message || null]
     );
 
-    // Enviar email a ti (solo si hay API key configurada)
-      // Enviar email a ti (solo si hay API key configurada)
-    let emailResult = null;
+    // Enviar emails (solo si hay API key configurada)
+    let emailResult = null;      // para ti (admin)
+    let userEmailResult = null;  // para la persona que llena el formulario
 
     if (resend) {
       try {
+        // 1) Notificación para ti
         emailResult = await resend.emails.send({
-          // usa dominio verificado
           from: 'LSS Flow <care@neuroljus.com>',
           to: ['ospieli85@gmail.com'],
           reply_to: email,
-
           subject: 'Ny demo-förfrågan från LSS Flow',
           text: `
 Ny demo-förfrågan:
@@ -74,19 +72,40 @@ ${message || '(inget meddelande)'}
 Mottagen: ${new Date().toISOString()}
           `.trim()
         });
-        console.log('Resend response:', emailResult);
+        console.log('Admin notification sent:', emailResult);
+
+        // 2) Confirmación para el usuario
+        userEmailResult = await resend.emails.send({
+          from: 'LSS Flow <care@neuroljus.com>',
+          to: [email],
+          subject: 'Tack för din förfrågan',
+          text: `
+Hej ${full_name},
+
+Tack för din förfrågan om en demo av LSS Flow.
+
+Vi återkommer inom kort med tidförslag och mer information.
+
+Vänliga hälsningar,
+LSS Flow Team
+Neuroljus
+          `.trim()
+        });
+        console.log('User confirmation sent:', userEmailResult);
       } catch (emailError) {
         console.error(
-          'Error sending notification email:',
+          'Error sending emails:',
           emailError?.message,
           emailError?.response?.data
         );
+        // No rompemos la respuesta al usuario aunque falle el email
       }
     }
 
-        return res.status(200).json({
+    return res.status(200).json({
       success: true,
-      emailSent: !!emailResult
+      adminEmailSent: !!emailResult,
+      userEmailSent: !!userEmailResult
     });
   } catch (error) {
     console.error('Error saving demo request:', error);
